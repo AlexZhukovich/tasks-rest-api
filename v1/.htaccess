@@ -7,3 +7,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^tasks/([0-9]+)$ controller/TaskController.php?taskid=$1 [L]
 RewriteRule ^tasks/complete$ controller/TaskController.php?completed=Y [L]
 RewriteRule ^tasks/incomplete$ controller/TaskController.php?completed=N [L]
+RewriteRule ^tasks$ controller/TaskController.php [L]
