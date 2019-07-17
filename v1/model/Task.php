@@ -75,7 +75,7 @@
         }
 
         public function setCompleted($completed) {
-            if (strtoupper($completed) !== 'Y' && strtoupper($completed) !== "N") {
+            if (strtoupper($completed) !== 'Y' && strtoupper($completed) !== 'N') {
                 throw new TaskException("Task completed must be Y or N");
             }
             $this->_completed = $completed;
