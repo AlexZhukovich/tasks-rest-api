@@ -45,7 +45,7 @@
             if (strlen($title) < 0 || strlen($title) > 255) {
                 throw new TaskException("Task title error");
             }
-            $this->title = $title;
+            $this->_title = $title;
         }
 
         public function getDescription() {
