@@ -149,7 +149,7 @@ COMMIT;
 
 ## Routes
 * **/v1/users/**
-  * **[POST]** Create a new user account.
+  * **[POST]** Create a new user account ([see requirements](#create_user_account)).
 * **/v1/sessions/** 
   * **[POST]** Create a new user session.
 * **/v1/sessions/SESSION_ID**
@@ -168,3 +168,16 @@ COMMIT;
   * **[GET]** Get tasks by `TASK_ID`, based on logged in user.
   * **[PATCH]** Update task by `TASK_ID`, based on logged in user.
   * **[DELETE]** Delete task by `TASK_ID`, based on logged in user.
+
+## Request requirements 
+Description of basic requirements for each request.
+
+### <a name="create_user_account"></a>Create a new user account
+
+| Label  | Value                           |
+| ------ |-------------------------------- |
+| Method | POST                            |
+| URL    | /tasks-rest-api/v1/users        |
+| Header | Content-Type : application/json |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"fullname":"FULL_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"username":"USER_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":"PASSWORD"<br>}|
+
