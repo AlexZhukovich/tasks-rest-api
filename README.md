@@ -21,8 +21,11 @@ I used the *Apache* server. However, it should work on any server which supports
 *Note: If you want to use different names of database and tables, remember to update source code.*
 
 ### Structure of Users table (tbl_users).
+
 **Charset:** utf8_general_ci
+
 **Structure:**
+
 | Column        | Type            | Collation    | Default value | Auto increment | Comments       |
 | ------------- | --------------- | ------------ | :-----------: | :------------: | -------------- |
 | id            | BIGINT          |              |               | **X**          | User ID        |
@@ -57,8 +60,11 @@ COMMIT;
 * **username** - UNIQUE KEY
 
 ### Structure of Sessions table (tbl_sessions).
+
 **Charset:** utf8_general_ci
+
 **Structure:**
+
 | Column             | Type          | Collation    | Auto increment | Comments                       |
 | ------------------ | ------------- | ------------ | :------------: | ------------------------------ |
 | id                 | BIGINT        |              | **X**          | Session ID                     |
@@ -100,8 +106,11 @@ COMMIT;
 * **userid** - FOREIGN KEY of `tbl_users.id`
 
 ### Structure of Tasks table (tbl_tasks).
+
 **Charset:** utf8_general_ci
+
 **Structure:**
+
 | Column      | Type           | Default value | Auto increment | Comments                |
 | ----------- | -------------- | :-----------: | :------------: | ----------------------- |
 | id          | BIGINT         |               | **X**          | Task ID                 |
