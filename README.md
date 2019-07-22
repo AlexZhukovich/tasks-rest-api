@@ -151,23 +151,23 @@ COMMIT;
 * **/v1/users/**
   * **[POST]** Create a new user account ([see requirements](#create_user_account)).
 * **/v1/sessions/** 
-  * **[POST]** Create a new user session.
+  * **[POST]** Create a new user session ([see requirements](#create_user_session)).
 * **/v1/sessions/SESSION_ID**
-  * **[PATCH]** Refresh access and refresh tokens, based on `SESSION_ID`.
-  * **[DELETE]** Delete existing session.
+  * **[PATCH]** Refresh access and refresh tokens, based on `SESSION_ID`. ([see requirements](#refresh-tokens)).
+  * **[DELETE]** Delete existing session ([see requirements](#delete_existing_session)).
 * **/v1/tasks/**
-  * **[GET]** Get tasks based on logged in user. 
-  * **[POST]** Create a new task for the logged in user.
+  * **[GET]** Get tasks based on logged in user ([see requirements](#get-tasks)). 
+  * **[POST]** Create a new task for the logged in user ([see requirements](#add-task)).
 * **/v1/tasks/page/PAGE**
-  * **[GET]** Get tasks based on logged in user for the `PAGE` (each page contains 20 tasks. It can be modified in the source code).
+  * **[GET]** Get tasks based on logged in user for the `PAGE_NUMBER` ([see requirements](#get-tasks-by-page)).
 * **/v1/tasks/complete**
-  * **[GET]** Get list of completed tasks for logged in user. 
+  * **[GET]** Get list of completed tasks for logged in user ([see requirements](#get-completed-tasks)). 
 * **/v1/tasks/incomplete**
-  * **[GET]** Get list of incompleted tasks for logged in user.
+  * **[GET]** Get list of incompleted tasks for logged in user([see requirements](#get-incompleted-tasks)).
 * **/v1/tasks/TASK_ID**
-  * **[GET]** Get tasks by `TASK_ID`, based on logged in user.
-  * **[PATCH]** Update task by `TASK_ID`, based on logged in user.
-  * **[DELETE]** Delete task by `TASK_ID`, based on logged in user.
+  * **[GET]** Get tasks by `TASK_ID`, based on logged in user ([see requirements](#get-task-by-id)).
+  * **[PATCH]** Update task by `TASK_ID`, based on logged in user ([see requirements](#update-task-by-id)).
+  * **[DELETE]** Delete task by `TASK_ID`, based on logged in user ([see requirements](#delete-task-by-id)).
 
 ## Request requirements 
 Description of basic requirements for each request.
@@ -181,3 +181,101 @@ Description of basic requirements for each request.
 | Header | Content-Type : application/json |
 | Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"fullname":"FULL_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"username":"USER_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":"PASSWORD"<br>}|
 
+### <a name="create_user_session"></a>Create a new user session
+
+| Label  | Value                           |
+| ------ |-------------------------------- |
+| Method | POST                            |
+| URL    | /tasks-rest-api/v1/sessions     |
+| Header | Content-Type : application/json |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"username":"USER_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":"PASSWORD"<br>}|
+
+### <a name="refresh-tokens"></a>Refresh access and refresh tokens
+
+| Label  | Value                                      |
+| ------ |------------------------------------------- |
+| Method | PATCH                                      |
+| URL    | /tasks-rest-api/v1/sessions/**SESSION_ID** |
+| Header | Content-Type : application/json<br>Authorization : ACCESS_TOKEN |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"refresh_token":"REFRESH_TOKEN"<br>}|
+
+### <a name="delete_existing_session"></a>Delete existing session
+
+| Label  | Value                                      |
+| ------ |------------------------------------------- |
+| Method | DELETE                                     |
+| URL    | /tasks-rest-api/v1/sessions/**SESSION_ID** |
+| Header | Authorization : ACCESS_TOKEN               |
+
+### <a name="get-tasks"></a>Get tasks based on logged in user
+
+| Label  | Value                                      |
+| ------ |------------------------------------------- |
+| Method | GET                                        |
+| URL    | /tasks-rest-api/v1/tasks                   |
+| Header | Authorization : ACCESS_TOKEN               |
+
+### <a name="add-task"></a>Create a new task for the logged in user
+
+| Label  | Value                                      |
+| ------ |------------------------------------------- |
+| Method | POST                                       |
+| URL    | /tasks-rest-api/v1/tasks                   |
+| Header | Content-Type : application/json<br>Authorization : ACCESS_TOKEN |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":"New Task",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":"New task description",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":"01/01/2019 01:00",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":"N"&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
+
+
+### <a name="get-tasks-by-page"></a>Get tasks based on logged in user for the `PAGE_NUMBER`
+
+Each page contains 20 tasks. It can be modified in the source code.
+
+| Label  | Value                                         |
+| ------ |---------------------------------------------- |
+| Method | GET                                           |
+| URL    | /tasks-rest-api/v1/tasks/page/**PAGE_NUMBER** |
+| Header | Authorization : ACCESS_TOKEN                  |
+
+
+### <a name="get-completed-tasks"></a>Get list of completed tasks for logged in user
+
+| Label  | Value                                         |
+| ------ |---------------------------------------------- |
+| Method | GET                                           |
+| URL    | /tasks-rest-api/v1/tasks/complete             |
+| Header | Authorization : ACCESS_TOKEN                  |
+
+### <a name="get-incompleted-tasks"></a>Get list of incompleted tasks for logged in user
+
+| Label  | Value                                         |
+| ------ |---------------------------------------------- |
+| Method | GET                                           |
+| URL    | /tasks-rest-api/v1/tasks/incomplete           |
+| Header | Authorization : ACCESS_TOKEN                  |
+
+
+### <a name="get-task-by-id"></a>Get task by `TASK_ID`, based on logged in user
+
+| Label  | Value                                         |
+| ------ |---------------------------------------------- |
+| Method | GET                                           |
+| URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
+| Header | Authorization : ACCESS_TOKEN                  |
+
+
+### <a name="update-task-by-id"></a>Update task by TASK_ID, based on logged in user
+
+| Label  | Value                                         |
+| ------ |---------------------------------------------- |
+| Method | PATCH                                         |
+| URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
+| Header | Authorization : ACCESS_TOKEN                  |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":"New Task",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":"New task description",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":"01/01/2019 01:00",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":"N"&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
+
+
+### <a name="delete-task-by-id"></a>Delete task by TASK_ID, based on logged in user
+
+| Label  | Value                                         |
+| ------ |---------------------------------------------- |
+| Method | DELETE                                        |
+| URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
+| Header | Authorization : ACCESS_TOKEN                  |
