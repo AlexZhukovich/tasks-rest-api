@@ -147,6 +147,22 @@ COMMIT;
 * **id** - PRIMARY KEY
 * **userid** - FOREIGN KEY of `tbl_users.id`
 
+## Use Cases
+Basic use case of using API for creating account, adding tasks to logged in user and log out.
+
+1. [Create a new account](#create_user_account)
+2. [Log In](#create_user_session)
+3. [Add a new task](#add-task)
+4. [Get all tasks](#get-tasks) or [Get all task split by pages](#get-tasks-by-page)
+5. [Log Out](#delete_existing_session)
+
+Additional features:
+1. [Update an existing task](#update-task-by-id)
+2. [Delete an existing task](#delete-task-by-id)
+3. [Get completed tasks](#get-completed-tasks)
+4. [Get incompleted tasks](#get-incompleted-tasks)
+
+
 ## Routes
 * **/v1/users/**
   * **[POST]** Create a new user account ([see requirements](#create_user_account)).
