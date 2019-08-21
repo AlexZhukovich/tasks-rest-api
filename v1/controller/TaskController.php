@@ -4,8 +4,7 @@
     require_once('../model/Task.php');
 
     try {
-        $readDb = DatabaseConnector::connectReadDatabase();
-        $writeDb = DatabaseConnector::connectWriteDatabase();
+        $db = DatabaseConnector::connectWriteDatabase();
     } catch (PDOException $ex) {
         error_log("Connection error: ".$ex, 0);
         $response = new Response();
@@ -30,7 +29,7 @@
     $accesstoken = $_SERVER[HTTP_AUTHORIZATION];
 
     try {
-        $query = $writeDb->prepare('SELECT userid, accesstokenexpiry, useractive, loginattempts FROM tbl_sessions, tbl_users WHERE tbl_sessions.userid = tbl_users.id AND accesstoken = :accesstoken');
+        $query = $db->prepare('SELECT userid, accesstokenexpiry, useractive, loginattempts FROM tbl_sessions, tbl_users WHERE tbl_sessions.userid = tbl_users.id AND accesstoken = :accesstoken');
         $query->bindParam(':accesstoken', $accesstoken, PDO::PARAM_STR);
         $query->execute();
 
@@ -100,7 +99,7 @@
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             try {
-                $query = $readDb->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
+                $query = $db->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
                 $query->bindParam(':taskid', $taskid, PDO::PARAM_INT);
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
@@ -149,7 +148,7 @@
             }
         } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             try {
-                $query = $writeDb->prepare('DELETE FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
+                $query = $db->prepare('DELETE FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
                 $query->bindParam(':taskid', $taskid, PDO::PARAM_INT);
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
@@ -232,7 +231,7 @@
                     exit;
                 }
 
-                $query = $writeDb->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
+                $query = $db->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
                 $query->bindParam(':taskid', $taskid, PDO::PARAM_INT);
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
@@ -252,7 +251,7 @@
                 }
 
                 $queryString = "UPDATE tbl_tasks SET ".$queryField." WHERE id = :taskid AND userid = :userid";
-                $query = $writeDb->prepare($queryString);
+                $query = $db->prepare($queryString);
 
                 if ($title_updated === true) {
                     $task->setTitle($jsonData->title);
@@ -288,7 +287,7 @@
                     exit;
                 }
 
-                $query = $writeDb->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid  AND userid = :userid');
+                $query = $db->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid  AND userid = :userid');
                 $query->bindParam(':taskid', $taskid, PDO::PARAM_INT);
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
@@ -358,7 +357,7 @@
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             try {
-                $query = $readDb->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE completed = :completed  AND userid = :userid');
+                $query = $db->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE completed = :completed  AND userid = :userid');
                 $query->bindParam(':completed', $completed, PDO::PARAM_STR);
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
@@ -419,7 +418,7 @@
 
             $limitPerPage = 20;
             try {
-                $query = $readDb->prepare('SELECT count(id) as totalNoOfTasks FROM tbl_tasks AND userid = :userid');
+                $query = $db->prepare('SELECT count(id) as totalNoOfTasks FROM tbl_tasks WHERE userid = :userid');
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
 
@@ -440,7 +439,7 @@
                 }
 
                 $offset = ($page == 1 ? 0 : ($limitPerPage * ($page - 1)));
-                $query = $readDb->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE userid = :userid limit :pglimit offset :offset');
+                $query = $db->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE userid = :userid limit :pglimit offset :offset');
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->bindParam(':pglimit', $limitPerPage, PDO::PARAM_INT);
                 $query->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -495,7 +494,7 @@
     } elseif (empty($_GET)) {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             try {
-                $query = $readDb->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE userid = :userid');
+                $query = $db->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE userid = :userid');
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
 
@@ -579,7 +578,7 @@
                 $deadline = $newTask->getDeadline();
                 $completed = $newTask->getCompleted();
 
-                $query = $writeDb->prepare('INSERT INTO tbl_tasks (title, description, deadline, completed, userid) VALUES (:title, :description, STR_TO_DATE(:deadline, \'%d/%m/%Y %H:%i\'), :completed, :userid)');
+                $query = $db->prepare('INSERT INTO tbl_tasks (title, description, deadline, completed, userid) VALUES (:title, :description, STR_TO_DATE(:deadline, \'%d/%m/%Y %H:%i\'), :completed, :userid)');
                 $query->bindParam(':title', $title, PDO::PARAM_STR);
                 $query->bindParam(':description', $description, PDO::PARAM_STR);
                 $query->bindParam(':deadline', $deadline, PDO::PARAM_STR);
@@ -597,8 +596,8 @@
                     exit;
                 }
 
-                $lastTaskId = $writeDb->lastInsertId();
-                $query = $readDb->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
+                $lastTaskId = $db->lastInsertId();
+                $query = $db->prepare('SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed FROM tbl_tasks WHERE id = :taskid AND userid = :userid');
                 $query->bindParam(':taskid', $lastTaskId, PDO::PARAM_INT);
                 $query->bindParam(':userid', $returned_userid, PDO::PARAM_INT);
                 $query->execute();
