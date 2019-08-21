@@ -10,13 +10,15 @@ A basic RESTful API with token-based authentication in PHP for "Task List" appli
 ## Set up
 I used the *Apache* server. However, it should work on any server which supports `.htacccess` files because it contains routing information.
 
+**Note:** *The `php_flag display_errors` on should be removed from the `.htaccess` file before installing to server.*
+
 ## MySQL database
 **Database name:** *tasks-db*.
 
 **Tables:**
-* Users (tbl_users)
-* Sessions (tbl_sessions)
-* Tasks (tbl_tasks)
+* **Users** (tbl_users)
+* **Sessions** (tbl_sessions)
+* **Tasks** (tbl_tasks)
 
 *Note: If you want to use different names of database and tables, remember to update source code.*
 
@@ -38,25 +40,25 @@ Additional features:
 
 ## Routes
 * **/v1/users/**
-  * **[POST]** Create a new user account ([see requirements](#create_user_account)).
+  * **<code>POST</code>** Create a new user account ([see requirements](#create_user_account)).
 * **/v1/sessions/** 
-  * **[POST]** Create a new user session ([see requirements](#create_user_session)).
+  * **<code>POST</code>** Log in (Create a new user session) ([see requirements](#create_user_session)).
 * **/v1/sessions/SESSION_ID**
-  * **[PATCH]** Refresh access and refresh tokens, based on `SESSION_ID`. ([see requirements](#refresh-tokens)).
-  * **[DELETE]** Delete existing session ([see requirements](#delete_existing_session)).
+  * **<code>PATCH</code>** Refresh access and refresh tokens, based on `SESSION_ID`. ([see requirements](#refresh-tokens)).
+  * **<code>DELETE</code>** Log out (Delete existing session) ([see requirements](#delete_existing_session)).
 * **/v1/tasks/**
-  * **[GET]** Get tasks based on logged in user ([see requirements](#get-tasks)). 
-  * **[POST]** Create a new task for the logged in user ([see requirements](#add-task)).
+  * **<code>GET</code>** Get tasks based on logged in user ([see requirements](#get-tasks)). 
+  * **<code>POST</code>** Create a new task for the logged in user ([see requirements](#add-task)).
 * **/v1/tasks/page/PAGE**
-  * **[GET]** Get tasks based on logged in user for the `PAGE_NUMBER` ([see requirements](#get-tasks-by-page)).
+  * **<code>GET</code>** Get tasks based on logged in user for the `PAGE_NUMBER` ([see requirements](#get-tasks-by-page)).
 * **/v1/tasks/complete**
-  * **[GET]** Get list of completed tasks for logged in user ([see requirements](#get-completed-tasks)). 
+  * **<code>GET</code>** Get list of completed tasks for logged in user ([see requirements](#get-completed-tasks)). 
 * **/v1/tasks/incomplete**
-  * **[GET]** Get list of incompleted tasks for logged in user([see requirements](#get-incompleted-tasks)).
+  * **<code>GET</code>** Get list of incompleted tasks for logged in user([see requirements](#get-incompleted-tasks)).
 * **/v1/tasks/TASK_ID**
-  * **[GET]** Get tasks by `TASK_ID`, based on logged in user ([see requirements](#get-task-by-id)).
-  * **[PATCH]** Update task by `TASK_ID`, based on logged in user ([see requirements](#update-task-by-id)).
-  * **[DELETE]** Delete task by `TASK_ID`, based on logged in user ([see requirements](#delete-task-by-id)).
+  * **<code>GET</code>** Get tasks by `TASK_ID`, based on logged in user ([see requirements](#get-task-by-id)).
+  * **<code>PATCH</code>** Update task by `TASK_ID`, based on logged in user ([see requirements](#update-task-by-id)).
+  * **<code>DELETE</code>** Delete task by `TASK_ID`, based on logged in user ([see requirements](#delete-task-by-id)).
 
 ## Request requirements 
 Description of basic requirements for each request.
@@ -65,7 +67,7 @@ Description of basic requirements for each request.
 
 | Label  | Value                           |
 | ------ |-------------------------------- |
-| Method | POST                            |
+| Method | **<code>POST</code>**           |
 | URL    | /tasks-rest-api/v1/users        |
 | Header | Content-Type : application/json |
 | Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"fullname":"FULL_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"username":"USER_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":"PASSWORD"<br>}|
@@ -74,7 +76,7 @@ Description of basic requirements for each request.
 
 | Label  | Value                           |
 | ------ |-------------------------------- |
-| Method | POST                            |
+| Method | **<code>POST</code>**           |
 | URL    | /tasks-rest-api/v1/sessions     |
 | Header | Content-Type : application/json |
 | Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"username":"USER_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":"PASSWORD"<br>}|
@@ -83,7 +85,7 @@ Description of basic requirements for each request.
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
-| Method | PATCH                                      |
+| Method | **<code>PATCH</code>**                     |
 | URL    | /tasks-rest-api/v1/sessions/**SESSION_ID** |
 | Header | Content-Type : application/json<br>Authorization : ACCESS_TOKEN |
 | Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"refresh_token":"REFRESH_TOKEN"<br>}|
@@ -92,7 +94,7 @@ Description of basic requirements for each request.
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
-| Method | DELETE                                     |
+| Method | **<code>DELETE</code>**                    |
 | URL    | /tasks-rest-api/v1/sessions/**SESSION_ID** |
 | Header | Authorization : ACCESS_TOKEN               |
 
@@ -100,7 +102,7 @@ Description of basic requirements for each request.
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
-| Method | GET                                        |
+| Method | **<code>GET</code>**                       |
 | URL    | /tasks-rest-api/v1/tasks                   |
 | Header | Authorization : ACCESS_TOKEN               |
 
@@ -108,7 +110,7 @@ Description of basic requirements for each request.
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
-| Method | POST                                       |
+| Method | **<code>POST</code>**                      |
 | URL    | /tasks-rest-api/v1/tasks                   |
 | Header | Content-Type : application/json<br>Authorization : ACCESS_TOKEN |
 | Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":"New Task",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":"New task description",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":"01/01/2019 01:00",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":"N"&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
@@ -120,7 +122,7 @@ Each page contains 20 tasks. It can be modified in the source code.
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
-| Method | GET                                           |
+| Method | **<code>GET</code>**                          |
 | URL    | /tasks-rest-api/v1/tasks/page/**PAGE_NUMBER** |
 | Header | Authorization : ACCESS_TOKEN                  |
 
@@ -129,7 +131,7 @@ Each page contains 20 tasks. It can be modified in the source code.
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
-| Method | GET                                           |
+| Method | **<code>GET</code>**                          |
 | URL    | /tasks-rest-api/v1/tasks/complete             |
 | Header | Authorization : ACCESS_TOKEN                  |
 
@@ -137,7 +139,7 @@ Each page contains 20 tasks. It can be modified in the source code.
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
-| Method | GET                                           |
+| Method | **<code>GET</code>**                          |
 | URL    | /tasks-rest-api/v1/tasks/incomplete           |
 | Header | Authorization : ACCESS_TOKEN                  |
 
@@ -146,7 +148,7 @@ Each page contains 20 tasks. It can be modified in the source code.
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
-| Method | GET                                           |
+| Method | **<code>GET</code>**                          |
 | URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
 | Header | Authorization : ACCESS_TOKEN                  |
 
@@ -155,7 +157,7 @@ Each page contains 20 tasks. It can be modified in the source code.
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
-| Method | PATCH                                         |
+| Method | **<code>PATCH</code>**                        |
 | URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
 | Header | Authorization : ACCESS_TOKEN                  |
 | Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":"New Task",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":"New task description",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":"01/01/2019 01:00",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":"N"&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
@@ -165,6 +167,6 @@ Each page contains 20 tasks. It can be modified in the source code.
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
-| Method | DELETE                                        |
+| Method | **<code>DELETE</code>**                       |
 | URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
 | Header | Authorization : ACCESS_TOKEN                  |
