@@ -174,7 +174,30 @@ The request contains user data: `ACCESS_TOKEN`.
 
 **Response:**
 ```
-
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": [],
+    "data": {
+        "row_returned": TASKS_COUNT,
+        "tasks": [
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            },
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            }
+        ]
+    }
+}
 ```
 
 ### <a name="add-task"></a>Create a new task
@@ -191,7 +214,23 @@ The request contains user data: `ACCESS_TOKEN`, `TASK_TITLE`, `TASK_DESCRIPTION`
 
 **Response:**
 ```
-
+{
+    "statusCode": 201,
+    "success": true,
+    "messages": ["Task created"],
+    "data": {
+        "rows_returned": 1,
+        "tasks": [
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            }
+        ]
+    }
+}
 ```
 
 ### <a name="get-tasks-by-page"></a>Get tasks by page number
@@ -206,7 +245,34 @@ The request contains user data: `PAGE_NUMBER` and `ACCESS_TOKEN`.
 
 **Response:**
 ```
-
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": [],
+    "data": {
+        "row_returned": TASKS_COUNT_ON_PAGE,
+        "total_rows": TASKS_COUNT,
+        "total_pages": TOTAL_PAGES_COUNT,
+        "has_next_page": true|false,
+        "has_previous_page": true|false,
+        "tasks": [
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            },
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            }
+        ]
+    }
+}
 ```
 
 ### <a name="get-completed-tasks"></a>Get list of completed tasks
@@ -221,7 +287,30 @@ The request contains user data: `ACCESS_TOKEN`.
 
 **Response:**
 ```
-
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": [],
+    "data": {
+        "row_returned": TASKS_COUNT,
+        "tasks": [
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            },
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            }
+        ]
+    }
+}
 ```
 
 ### <a name="get-incompleted-tasks"></a>Get list of incompleted tasks
@@ -236,7 +325,30 @@ The request contains user data: `ACCESS_TOKEN`.
 
 **Response:**
 ```
-
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": [],
+    "data": {
+        "row_returned": TASKS_COUNT,
+        "tasks": [
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            },
+            {
+                "id": TASK_ID,
+                "title": "TASK_TITLE",
+                "description": "TASK_DESCRIPTION",
+                "deadline": "TASK_DEADLINE",
+                "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+            }
+        ]
+    }
+}
 ```
 
 ### <a name="get-task-by-id"></a>Get task by ID
@@ -251,7 +363,19 @@ The request contains user data: `TASK_ID` and `ACCESS_TOKEN`.
 
 **Response:**
 ```
-
+ "statusCode": 200,
+    "success": true,
+    "messages": [],
+    "data": {
+        "rows_returned": 1,
+        "tasks": {
+            "id": TASK_ID,
+            "title": "TASK_TITLE",
+            "description": "TASK_DESCRIPTION",
+            "deadline": "TASK_DEADLINE",
+            "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+        }
+    }
 ```
 
 ### <a name="update-task-by-id"></a>Update task by ID
@@ -267,7 +391,21 @@ The request contains user data: `TASK_ID`, `ACCESS_TOKEN`, `TASK_TITLE`, `TASK_D
 
 **Response:**
 ```
-
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": ["Task updated"],
+    "data": {
+        "rows_returned": 1,
+        "tasks": {
+            "id": TASK_ID,
+            "title": "TASK_TITLE",
+            "description": "TASK_DESCRIPTION",
+            "deadline": "TASK_DEADLINE",
+            "completed": "TASK_COMPLETED"  // 'Y' or 'N'
+        }
+    }
+}
 ```
 
 ### <a name="delete-task-by-id"></a>Delete task by ID
@@ -282,5 +420,10 @@ The request contains user data: `TASK_ID` and `ACCESS_TOKEN`.
 
 **Response:**
 ```
-
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": ["Task deleted"],
+    "data": null
+}
 ```
