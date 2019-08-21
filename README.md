@@ -196,8 +196,6 @@ The request contains user data: `ACCESS_TOKEN`, `TASK_TITLE`, `TASK_DESCRIPTION`
 
 ### <a name="get-tasks-by-page"></a>Get tasks by page number
 
-Each page contains 20 tasks. It can be modified in the source code.
-
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
 | Method | **<code>GET</code>**                          |
