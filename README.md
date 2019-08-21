@@ -70,7 +70,23 @@ Description of basic requirements for each request.
 | Method | **<code>POST</code>**           |
 | URL    | /tasks-rest-api/v1/users        |
 | Header | Content-Type : application/json |
-| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"fullname":"FULL_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"username":"USER_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":"PASSWORD"<br>}|
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"fullname":`"FULL_NAME"`, <br>&nbsp;&nbsp;&nbsp;&nbsp;"username":`"USER_NAME"`, <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":`"PASSWORD"`<br>}|
+
+The request contains user data: `FULL_NAME`, `USER_NAME` and `PASSWORD`.
+
+**Response**:
+```
+{
+    "statusCode": 201,
+    "success": true,
+    "messages": ["User created"],
+    "data": {
+        "user_id": "ID",
+        "fullname": "FULL_NAME",
+        "username": "USER_NAME"
+    }
+}
+```
 
 ### <a name="create_user_session"></a>Create a new user session
 
@@ -79,24 +95,72 @@ Description of basic requirements for each request.
 | Method | **<code>POST</code>**           |
 | URL    | /tasks-rest-api/v1/sessions     |
 | Header | Content-Type : application/json |
-| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"username":"USER_NAME", <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":"PASSWORD"<br>}|
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"username":`"USER_NAME"`, <br>&nbsp;&nbsp;&nbsp;&nbsp;"password":`"PASSWORD"`<br>}|
+
+The request contains user data: `USER_NAME` and `PASSWORD`.
+
+**Response**:
+```
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": [],
+    "data": {
+        "user_id": "ID",
+        "fullname": "FULL_NAME",
+        "username": "USER_NAME"
+    }
+}
+```
 
 ### <a name="refresh-tokens"></a>Refresh access and refresh tokens
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
 | Method | **<code>PATCH</code>**                     |
-| URL    | /tasks-rest-api/v1/sessions/**SESSION_ID** |
-| Header | Content-Type : application/json<br>Authorization : ACCESS_TOKEN |
-| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"refresh_token":"REFRESH_TOKEN"<br>}|
+| URL    | /tasks-rest-api/v1/sessions/`SESSION_ID` |
+| Header | Content-Type : application/json<br>Authorization : `ACCESS_TOKEN` |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"refresh_token":`"REFRESH_TOKEN"`<br>}|
+
+The request contains user data: `SESSION_ID`, `ACCESS_TOKEN` and `REFRESH_TOKEN`.
+
+**Response:**
+```
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": ["Token refreshed"],
+    "data": {
+        "session_id": SESSION_ID,
+        "access_token": "ACCESS_TOKEN",
+        "access_token_expires_in": ACCESS_TOKEN_EXPIRY,
+        "refresh_token": "REFRESH_TOKEN",
+        "refresh_token_expires_in": REFRESH_TOKEN_EXPIRY
+    }
+}
+```
 
 ### <a name="delete_existing_session"></a>Delete existing session
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
 | Method | **<code>DELETE</code>**                    |
-| URL    | /tasks-rest-api/v1/sessions/**SESSION_ID** |
-| Header | Authorization : ACCESS_TOKEN               |
+| URL    | /tasks-rest-api/v1/sessions/`SESSION_ID`   |
+| Header | Authorization : `ACCESS_TOKEN`             |
+
+The request contains user data: `SESSION_ID` and `ACCESS_TOKEN`.
+
+**Response:**
+```
+{
+    "statusCode": 200,
+    "success": true,
+    "messages": ["Logged out"],
+    "data": {
+        "session_id": SESSION_ID
+    }
+}
+```
 
 ### <a name="get-tasks"></a>Get tasks based on logged in user
 
@@ -104,7 +168,14 @@ Description of basic requirements for each request.
 | ------ |------------------------------------------- |
 | Method | **<code>GET</code>**                       |
 | URL    | /tasks-rest-api/v1/tasks                   |
-| Header | Authorization : ACCESS_TOKEN               |
+| Header | Authorization : `ACCESS_TOKEN`             |
+
+The request contains user data: `ACCESS_TOKEN`.
+
+**Response:**
+```
+
+```
 
 ### <a name="add-task"></a>Create a new task for the logged in user
 
@@ -112,9 +183,16 @@ Description of basic requirements for each request.
 | ------ |------------------------------------------- |
 | Method | **<code>POST</code>**                      |
 | URL    | /tasks-rest-api/v1/tasks                   |
-| Header | Content-Type : application/json<br>Authorization : ACCESS_TOKEN |
-| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":"New Task",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":"New task description",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":"01/01/2019 01:00",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":"N"&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
+| Header | Content-Type : application/json<br>Authorization : `ACCESS_TOKEN` |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":`"TASK_TITLE"`,<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":`"TASK_DESCRIPTION"`,&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":`"TASK_DEADLINE"`,&nbsp;&nbsp;&nbsp;&nbsp;*//optional, date format: 01/01/2019 01:00*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":`"TASK_COMPLETED"`&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
 
+
+The request contains user data: `ACCESS_TOKEN`, `TASK_TITLE`, `TASK_DESCRIPTION`, `TASK_DEADLINE` and `TASK_COMPLETED`.
+
+**Response:**
+```
+
+```
 
 ### <a name="get-tasks-by-page"></a>Get tasks based on logged in user for the `PAGE_NUMBER`
 
@@ -123,9 +201,15 @@ Each page contains 20 tasks. It can be modified in the source code.
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
 | Method | **<code>GET</code>**                          |
-| URL    | /tasks-rest-api/v1/tasks/page/**PAGE_NUMBER** |
-| Header | Authorization : ACCESS_TOKEN                  |
+| URL    | /tasks-rest-api/v1/tasks/page/`PAGE_NUMBER`   |
+| Header | Authorization : `ACCESS_TOKEN`                |
 
+The request contains user data: `PAGE_NUMBER` and `ACCESS_TOKEN`.
+
+**Response:**
+```
+
+```
 
 ### <a name="get-completed-tasks"></a>Get list of completed tasks for logged in user
 
@@ -133,7 +217,14 @@ Each page contains 20 tasks. It can be modified in the source code.
 | ------ |---------------------------------------------- |
 | Method | **<code>GET</code>**                          |
 | URL    | /tasks-rest-api/v1/tasks/complete             |
-| Header | Authorization : ACCESS_TOKEN                  |
+| Header | Authorization : `ACCESS_TOKEN`                |
+
+The request contains user data: `ACCESS_TOKEN`.
+
+**Response:**
+```
+
+```
 
 ### <a name="get-incompleted-tasks"></a>Get list of incompleted tasks for logged in user
 
@@ -141,32 +232,57 @@ Each page contains 20 tasks. It can be modified in the source code.
 | ------ |---------------------------------------------- |
 | Method | **<code>GET</code>**                          |
 | URL    | /tasks-rest-api/v1/tasks/incomplete           |
-| Header | Authorization : ACCESS_TOKEN                  |
+| Header | Authorization : `ACCESS_TOKEN`                |
 
+The request contains user data: `ACCESS_TOKEN`.
+
+**Response:**
+```
+
+```
 
 ### <a name="get-task-by-id"></a>Get task by `TASK_ID`, based on logged in user
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
 | Method | **<code>GET</code>**                          |
-| URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
-| Header | Authorization : ACCESS_TOKEN                  |
+| URL    | /tasks-rest-api/v1/tasks/`TASK_ID`            |
+| Header | Authorization : `ACCESS_TOKEN`                |
 
+The request contains user data: `TASK_ID` and `ACCESS_TOKEN`.
+
+**Response:**
+```
+
+```
 
 ### <a name="update-task-by-id"></a>Update task by TASK_ID, based on logged in user
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
 | Method | **<code>PATCH</code>**                        |
-| URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
-| Header | Authorization : ACCESS_TOKEN                  |
-| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":"New Task",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":"New task description",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":"01/01/2019 01:00",&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":"N"&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
+| URL    | /tasks-rest-api/v1/tasks/`TASK_ID`            |
+| Header | Authorization : `ACCESS_TOKEN`                |
+| Body   | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"title":`"TASK_TITLE"`,<br>&nbsp;&nbsp;&nbsp;&nbsp;"description":`"TASK_DESCRIPTION"`,&nbsp;&nbsp;&nbsp;&nbsp;*//optional*<br>&nbsp;&nbsp;&nbsp;&nbsp;"deadline":`"TASK_DEADLINE"`,&nbsp;&nbsp;&nbsp;&nbsp;*//optional, date format: 01/01/2019 01:00*<br>&nbsp;&nbsp;&nbsp;&nbsp;"completed":`"TASK_COMPLETED"`&nbsp;&nbsp;&nbsp;&nbsp;*// N - incompleted, Y - completed*<br>}|
 
+The request contains user data: `TASK_ID`, `ACCESS_TOKEN`, `TASK_TITLE`, `TASK_DESCRIPTION`, `TASK_DEADLINE` and `TASK_COMPLETED`..
+
+**Response:**
+```
+
+```
 
 ### <a name="delete-task-by-id"></a>Delete task by TASK_ID, based on logged in user
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
 | Method | **<code>DELETE</code>**                       |
-| URL    | /tasks-rest-api/v1/tasks/**TASK_ID**          |
-| Header | Authorization : ACCESS_TOKEN                  |
+| URL    | /tasks-rest-api/v1/tasks/`TASK_ID`            |
+| Header | Authorization : `ACCESS_TOKEN`                |
+
+The request contains user data: `TASK_ID` and `ACCESS_TOKEN`.
+
+**Response:**
+```
+
+```
