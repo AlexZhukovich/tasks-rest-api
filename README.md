@@ -47,18 +47,18 @@ Additional features:
   * **<code>PATCH</code>** Refresh access and refresh tokens, based on `SESSION_ID`. ([see requirements](#refresh-tokens)).
   * **<code>DELETE</code>** Log out (Delete existing session) ([see requirements](#delete_existing_session)).
 * **/v1/tasks/**
-  * **<code>GET</code>** Get tasks based on logged in user ([see requirements](#get-tasks)). 
-  * **<code>POST</code>** Create a new task for the logged in user ([see requirements](#add-task)).
+  * **<code>GET</code>** Get all tasks ([see requirements](#get-tasks)). 
+  * **<code>POST</code>** Create a new task ([see requirements](#add-task)).
 * **/v1/tasks/page/PAGE**
-  * **<code>GET</code>** Get tasks based on logged in user for the `PAGE_NUMBER` ([see requirements](#get-tasks-by-page)).
+  * **<code>GET</code>** Get tasks by page number ([see requirements](#get-tasks-by-page)).
 * **/v1/tasks/complete**
-  * **<code>GET</code>** Get list of completed tasks for logged in user ([see requirements](#get-completed-tasks)). 
+  * **<code>GET</code>** Get list of completed tasks ([see requirements](#get-completed-tasks)). 
 * **/v1/tasks/incomplete**
-  * **<code>GET</code>** Get list of incompleted tasks for logged in user([see requirements](#get-incompleted-tasks)).
+  * **<code>GET</code>** Get list of incompleted tasks ([see requirements](#get-incompleted-tasks)).
 * **/v1/tasks/TASK_ID**
-  * **<code>GET</code>** Get tasks by `TASK_ID`, based on logged in user ([see requirements](#get-task-by-id)).
-  * **<code>PATCH</code>** Update task by `TASK_ID`, based on logged in user ([see requirements](#update-task-by-id)).
-  * **<code>DELETE</code>** Delete task by `TASK_ID`, based on logged in user ([see requirements](#delete-task-by-id)).
+  * **<code>GET</code>** Get tasks by ID ([see requirements](#get-task-by-id)).
+  * **<code>PATCH</code>** Update task by ID ([see requirements](#update-task-by-id)).
+  * **<code>DELETE</code>** Delete task by ID ([see requirements](#delete-task-by-id)).
 
 ## Request requirements 
 Description of basic requirements for each request.
@@ -88,7 +88,7 @@ The request contains user data: `FULL_NAME`, `USER_NAME` and `PASSWORD`.
 }
 ```
 
-### <a name="create_user_session"></a>Create a new user session
+### <a name="create_user_session"></a>Log in (Create a new user session)
 
 | Label  | Value                           |
 | ------ |-------------------------------- |
@@ -140,7 +140,7 @@ The request contains user data: `SESSION_ID`, `ACCESS_TOKEN` and `REFRESH_TOKEN`
 }
 ```
 
-### <a name="delete_existing_session"></a>Delete existing session
+### <a name="delete_existing_session"></a>Log out (Delete existing session)
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
@@ -162,7 +162,7 @@ The request contains user data: `SESSION_ID` and `ACCESS_TOKEN`.
 }
 ```
 
-### <a name="get-tasks"></a>Get tasks based on logged in user
+### <a name="get-tasks"></a>Get all tasks
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
@@ -177,7 +177,7 @@ The request contains user data: `ACCESS_TOKEN`.
 
 ```
 
-### <a name="add-task"></a>Create a new task for the logged in user
+### <a name="add-task"></a>Create a new task
 
 | Label  | Value                                      |
 | ------ |------------------------------------------- |
@@ -194,7 +194,7 @@ The request contains user data: `ACCESS_TOKEN`, `TASK_TITLE`, `TASK_DESCRIPTION`
 
 ```
 
-### <a name="get-tasks-by-page"></a>Get tasks based on logged in user for the `PAGE_NUMBER`
+### <a name="get-tasks-by-page"></a>Get tasks by page number
 
 Each page contains 20 tasks. It can be modified in the source code.
 
@@ -211,7 +211,7 @@ The request contains user data: `PAGE_NUMBER` and `ACCESS_TOKEN`.
 
 ```
 
-### <a name="get-completed-tasks"></a>Get list of completed tasks for logged in user
+### <a name="get-completed-tasks"></a>Get list of completed tasks
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
@@ -226,7 +226,7 @@ The request contains user data: `ACCESS_TOKEN`.
 
 ```
 
-### <a name="get-incompleted-tasks"></a>Get list of incompleted tasks for logged in user
+### <a name="get-incompleted-tasks"></a>Get list of incompleted tasks
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
@@ -241,7 +241,7 @@ The request contains user data: `ACCESS_TOKEN`.
 
 ```
 
-### <a name="get-task-by-id"></a>Get task by `TASK_ID`, based on logged in user
+### <a name="get-task-by-id"></a>Get task by ID
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
@@ -256,7 +256,7 @@ The request contains user data: `TASK_ID` and `ACCESS_TOKEN`.
 
 ```
 
-### <a name="update-task-by-id"></a>Update task by TASK_ID, based on logged in user
+### <a name="update-task-by-id"></a>Update task by ID
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
@@ -272,7 +272,7 @@ The request contains user data: `TASK_ID`, `ACCESS_TOKEN`, `TASK_TITLE`, `TASK_D
 
 ```
 
-### <a name="delete-task-by-id"></a>Delete task by TASK_ID, based on logged in user
+### <a name="delete-task-by-id"></a>Delete task by ID
 
 | Label  | Value                                         |
 | ------ |---------------------------------------------- |
