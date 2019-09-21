@@ -126,7 +126,6 @@
                 $response = new Response();
                 $response->setHttpStatusCode(200);
                 $response->setSuccess(true);
-                $response->toCache(true);
                 $response->setData($returnData);
                 $response->send();
                 exit;
@@ -376,7 +375,6 @@
                 $response = new Response();
                 $response->setHttpStatusCode(200);
                 $response->setSuccess(true);
-                $response->toCache(true);
                 $response->setData($returnData);
                 $response->send();
                 exit;
@@ -462,7 +460,6 @@
                 $response = new Response();
                 $response->setHttpStatusCode(200);
                 $response->setSuccess(true);
-                $response->toCache(true);
                 $response->setData($returnData);
                 $response->send();
                 exit;
@@ -513,7 +510,6 @@
                 $response = new Response();
                 $response->setHttpStatusCode(200);
                 $response->setSuccess(true);
-                $response->toCache(true);
                 $response->setData($returnData);
                 $response->send();
                 exit;
